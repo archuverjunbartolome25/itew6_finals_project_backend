@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
         ];
 
         foreach ($roles as $role) {
-            Role::create($role);
+            Role::firstOrCreate(['name' => $role]);
         }
 
         $this->command->info('Roles created: admin, faculty, student');
