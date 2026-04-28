@@ -66,7 +66,7 @@ class EmployeeSeeder extends Seeder
         ];
 
         foreach ($employees as $employee) {
-            Employee::create($employee);
+            Employee::firstOrCreate($employee);
         }
     }
 }
