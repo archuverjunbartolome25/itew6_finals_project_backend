@@ -34,7 +34,7 @@ environment:
   APP_URL: '${APP_URL}'
   
   # Database (will be provided by Laravel Cloud)
-  DB_CONNECTION: mysql
+  DB_CONNECTION: pgsql
   DB_HOST: '${DB_HOST}'
   DB_PORT: '${DB_PORT}'
   DB_DATABASE: '${DB_DATABASE}'
@@ -76,10 +76,10 @@ environment:
 
 # Services
 services:
-  # MySQL database
+  # PostgreSQL database
   database:
-    type: mysql
-    version: '8.0'
+    type: postgres
+    version: '18'
     size: small
     
   # Redis for cache and sessions
@@ -113,7 +113,7 @@ health:
   
   # Database connection check
   database:
-    connection: mysql
+    connection: pgsql
     timeout: 5
 
 # Scaling

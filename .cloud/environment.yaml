@@ -7,7 +7,7 @@ production:
   
   # Database configuration
   database:
-    connection: mysql
+    connection: pgsql
     host: "${DB_HOST}"
     port: "${DB_PORT}"
     database: "${DB_DATABASE}"
