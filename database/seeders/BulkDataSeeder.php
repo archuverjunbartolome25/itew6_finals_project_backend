@@ -73,10 +73,17 @@ class BulkDataSeeder extends Seeder
         $students = [];
         $studentProfiles = [];
         
+        // Get existing student IDs to avoid conflicts
+        $existingStudentIds = DB::table('students')->pluck('student_id')->toArray();
+        
         for ($i = 1; $i <= 1000; $i++) {
             $firstName = $this->generateFirstName();
             $lastName = $this->generateLastName();
-            $studentId = 'STU' . str_pad($i, 6, '0', STR_PAD_LEFT);
+            
+            // Generate unique student ID that doesn't conflict with existing ones
+            do {
+                $studentId = 'STU' . str_pad($i, 6, '0', STR_PAD_LEFT);
+            } while (in_array($studentId, $existingStudentIds));
             
             $students[] = [
                 'student_id' => $studentId,
