@@ -82,18 +82,30 @@ class BulkDataSeeder extends Seeder
                 'student_id' => $studentId,
                 'first_name' => $firstName,
                 'last_name' => $lastName,
-                'email' => strtolower($firstName . '.' . $lastName . $i . '@student.university.edu'),
+                'email' => strtolower($firstName . '.' . $lastName . $i . '@student.university.edu.ph'),
                 'phone' => $this->generatePhoneNumber(),
-                'year_level' => rand(1, 4),
                 'program' => $programs[array_rand($programs)],
+                'year_level' => rand(1, 4),
                 'status' => 'active',
                 'date_enrolled' => $this->generateRandomDate('2020-01-01', '2024-01-01'),
                 'created_at' => now(),
                 'updated_at' => now(),
             ];
+            
+            // Insert in smaller chunks to prevent memory/timeouts
+            if ($i % 100 === 0) {
+                DB::table('students')->insert($students);
+                $this->command->info('Inserted ' . count($students) . ' students');
+                $students = [];
+            }
+        }
+        
+        // Insert remaining students
+        if (!empty($students)) {
+            DB::table('students')->insert($students);
+            $this->command->info('Inserted ' . count($students) . ' students');
         }
 
-        DB::table('students')->insert($students);
         $this->command->info('1000 students created successfully!');
 
         // Generate Student Profiles
