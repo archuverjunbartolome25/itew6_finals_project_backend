@@ -24,7 +24,6 @@ build:
     - config:cache
     - route:cache
     - view:cache
-    - migrate --force
 
 # Environment variables
 environment:
@@ -153,6 +152,7 @@ monitoring:
 hooks:
   # Pre-deployment
   pre_deploy:
+    - cp .env.production .env
     - php artisan down
     - php artisan config:clear
     - php artisan cache:clear
