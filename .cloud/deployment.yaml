@@ -40,7 +40,7 @@ environment:
   DB_USERNAME: '${DB_USERNAME}'
   DB_PASSWORD: '${DB_PASSWORD}'
   
-  # Cache and session
+  # Cache and session (ensure database consistency)
   CACHE_DRIVER: redis
   SESSION_DRIVER: redis
   QUEUE_CONNECTION: redis
@@ -153,9 +153,8 @@ hooks:
   # Pre-deployment
   pre_deploy:
     - cp .env.production .env
+    - php artisan optimize:clear
     - php artisan down
-    - php artisan config:clear
-    - php artisan cache:clear
     
   # Post-deployment
   post_deploy:
